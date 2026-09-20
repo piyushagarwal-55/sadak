@@ -34,17 +34,35 @@ In the create flow the field is under **Advanced settings → Environment
 variables**. If you miss it, nothing is broken: set them afterwards and hit
 *Redeploy this version*.
 
-## 1. Create the Amplify app
+## 1. Create the Amplify app — in the CONSOLE, not the CLI
 
-Console → **Amplify** → *Create new app* → **GitHub** → authorise → pick
-`piyushagarwal-55/sadak` and the branch you are submitting.
+Console → **Amplify** → region **N. Virginia (us-east-1)** → *Create new app* →
+**GitHub** → authorise → `piyushagarwal-55/sadak`, branch `main`.
 
-Amplify reads `amplify.yml` at the repo root and finds `appRoot: game_engine`
-by itself. If it offers to generate a build spec, decline — the one in the repo
-is the one that knows the app is not at the root.
+**Use the console for this step even if you are otherwise driving from the CLI.**
+It is the only way to connect the repository through Amplify's **GitHub App**.
+`aws amplify create-app --access-token <PAT>` also "works" — it returns an app
+with the repo attached — and then every build fails in 20-60 seconds with:
 
-Deploy in **ap-south-1 (Mumbai)** if offered: it is nearest the users and the
-same region as the tables.
+```
+!!! Unable to assume specified IAM Role. Please ensure the selected IAM Role
+    has sufficient permissions and the Trust Relationship is configured correctly.
+```
+
+That message is a lie. There is nothing wrong with the role. Amplify reports an
+unreachable repository as an IAM error, and it took eight failed builds — new
+roles, corrected trust policies, regional service principals, two regions, and
+a run with no roles attached at all — before switching the connection to the
+GitHub App made it clone on the first attempt. **If you see that error, look at
+the repo connection, not at IAM.**
+
+Not **ap-south-1**, despite the tables being there: this account cannot create
+Amplify apps in Mumbai at all (see *Account restrictions* below). The app runs
+in us-east-1 and reaches the Mumbai tables across regions, which is exactly why
+`tableRegion()` is pinned rather than reading `AWS_REGION`.
+
+If Amplify offers to generate a build spec, decline — the `amplify.yml` in the
+repo is the one that knows the app is not at the root.
 
 ## 2. Environment variables
 
@@ -54,6 +72,7 @@ Amplify → *Hosting* → **Environment variables**. Copy these from
 **Required** - the build fails, or the app is wrong, without these:
 
 ```
+AMPLIFY_MONOREPO_APP_ROOT=game_engine  see below - not optional
 NEXT_PUBLIC_SUPABASE_URL              throws at build time
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY  throws at build time
 SUPABASE_SECRET_KEY
@@ -61,6 +80,17 @@ GROQ_API_KEY                          the reasoning plane
 SARVAM_API_KEY                        speech in and out
 NEXT_PUBLIC_SITE_URL                  see below
 LIVEKIT_URL / _API_KEY / _API_SECRET  live-voice path only
+```
+
+`AMPLIFY_MONOREPO_APP_ROOT=game_engine` is the one that is easy to miss, because
+`amplify.yml` already declares `appRoot: game_engine` and it looks redundant. It
+is not. Amplify's framework detection runs BEFORE it reads the build spec, so
+without the variable it looks for `package.json` at the repo root, does not find
+one, and stops:
+
+```
+CustomerError: Cannot read 'next' version in package.json.
+If you are using monorepo, please ensure that AMPLIFY_MONOREPO_APP_ROOT is set
 ```
 
 `NEXT_PUBLIC_SITE_URL` is the quiet one. Unset, it does not fail -- it falls
@@ -135,6 +165,10 @@ Amplify gives you a URL like `https://main.d1234abcd.amplifyapp.com`.
 
 In this order, because each one tells you something the next cannot:
 
+0. **It is live.** Verified 20 Sep 2026:
+   `https://main.d33zh3b90nj4kw.amplifyapp.com` -> 307 `/login?next=%2F`,
+   then 200 in 0.83s, `self.__next_f` present (so it really is SSR and not a
+   static export), `og:url` set to the Amplify domain, no console errors.
 1. **The page renders.** Fonts, the ten district cards, no unstyled flash.
 2. **Sign in.** If it bounces to localhost, step 4 is not done.
 3. **Compile a world.** This is the one that proves the deployment rather than
@@ -145,6 +179,22 @@ In this order, because each one tells you something the next cannot:
    third cache tier is doing its job. If it 404s with "Unknown character",
    check step 3's IAM policy — that is what the symptom means here, however
    much it looks like a broken microphone.
+
+## Account restrictions on this AWS account
+
+Measured on 20 Sep 2026, account `357199110742`. None of these are
+configuration problems and none can be fixed from this repo.
+
+| Symptom | Reality |
+|---|---|
+| Amplify in **ap-south-1**: *"You have reached the maximum number of apps in this account"* | 1 app existed; the quota is 25. Creating the same app in us-east-1 succeeded instantly. |
+| Creating a **second** app anywhere: same message | The account holds exactly one Amplify app. Deletion is asynchronous, so the slot does not free immediately. |
+| Bedrock: `400 Operation not allowed` on every model, every region | Applied invocation quota of 0 for every model, while batch quotas sit at their defaults. See docs/AWS.md. |
+
+The pattern is a new account that has not been fully released. It reports each
+restriction as something it is not — a quota that is actually zero, a limit that
+is not reached, a role that is not the problem. **When an AWS error on this
+account does not match what you can see, suspect the account before the config.**
 
 ## Cost
 
