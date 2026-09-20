@@ -13,6 +13,11 @@ function isPublicPath(pathname: string): boolean {
     if (pathname.startsWith("/play") || pathname.startsWith("/api/sim/")) return true;
   }
   return (
+    // The landing page. It is the only thing a signed-out visitor can reach,
+    // and `app/page.tsx` decides what "/" renders: the landing for a stranger,
+    // the city picker for anyone with a session. Without this line the front
+    // door redirects to a sign-in form nobody has a reason to fill in yet.
+    pathname === "/" ||
     pathname === "/login" ||
     pathname.startsWith("/auth/") ||
     pathname === "/privacy" ||
