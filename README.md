@@ -11,8 +11,16 @@
 </p>
 
 <p align="center">
-  <b><a href="https://main.d33zh3b90nj4kw.amplifyapp.com">main.d33zh3b90nj4kw.amplifyapp.com</a></b><br/>
-  <sub>Opens as a guest. No account, no install, no card.</sub>
+  <a href="https://youtu.be/hmHDtet0heY">
+    <img src="docs/assets/sadak-hero.png" alt="SADAK — an immersive 3D Indian street for spoken-language practice" width="100%" />
+  </a>
+</p>
+
+<p align="center">
+  <b><a href="https://youtu.be/hmHDtet0heY">▶ Watch the demo</a></b>
+  &nbsp;·&nbsp;
+  <b><a href="https://main.d33zh3b90nj4kw.amplifyapp.com">Enter the street ↗</a></b><br/>
+  <sub>Or open the live experience as a guest — no account, install, or card.</sub>
 </p>
 
 <p align="center">
