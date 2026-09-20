@@ -1,6 +1,6 @@
 # SADAK — demo video script
 
-Runs about 3 minutes. Live at https://main.d33zh3b90nj4kw.amplifyapp.com
+Runs about 3 minutes 10. Live at https://main.d33zh3b90nj4kw.amplifyapp.com
 
 ## The story this tells
 
@@ -30,7 +30,7 @@ Read it a few times, then stop reading it.
    a ten-second look. Building it on camera costs twenty dead seconds.
 3. **Test the microphone in the browser you're recording in.** Chrome asks
    permission once and it will pick your best take to do it.
-4. **Sign out**, so you open on the login screen.
+4. **Sign out**, so you open on the landing page rather than the city picker.
 5. **Load the site a few minutes before.** It's serverless — a cold instance
    makes the first load slow and it reads as the app being heavy.
 6. Close other tabs. The 3D world and the recorder both want the GPU.
@@ -38,9 +38,10 @@ Read it a few times, then stop reading it.
 
 ---
 
-## Beat 1 · The setup — 0:00 to 0:25
+## Beat 1 · The setup — 0:00 to 0:30
 
-**Screen:** Login page, still. Don't move the cursor while you talk.
+**Screen:** The landing page, at the top. A darkened Hyderabad street with
+**SADAK.** across it. Don't move the cursor while you talk — let the hero sit.
 
 > Let's say I get into Amazon. That means Hyderabad — their biggest campus
 > outside the US is there. So, naturally, I'd have to pick up some Telugu.
@@ -51,25 +52,32 @@ Read it a few times, then stop reading it.
 > interview I'm worried about. It's the first Saturday, standing at a vegetable
 > stall, not able to say a word.
 
-**Screen:** Move to **Continue as guest** and click.
+**Screen:** Scroll slowly — one flick — into the city panels. Hover one and let
+it expand.
 
-> So this is what I built for that. It opens as a guest — nothing to sign up
-> for.
+> Ten cities. Each one speaks its own language.
 
-**Delivery:** Slowest stretch in the video. This is the only part where you're
-asking someone to care rather than showing them something. The pause before "And
-I've been thinking" is worth taking.
+**Screen:** Click **Continue as guest** in the hero, or the button in the nav.
+
+> So this is what I built for that. No account — it opens as a guest.
+
+**Delivery:** Slowest stretch in the video, and the only part where you're asking
+someone to care rather than showing them something. The pause before "And I've
+been thinking" is worth taking.
+
+The scroll is worth five seconds on its own. Those panels expanding is the first
+moment the video looks like a product rather than a school project, and it costs
+you nothing to show it before you click through.
 
 ---
 
-## Beat 2 · Where I'm going, and what I already know — 0:25 to 0:55
+## Beat 2 · Where I'm going, and what I already know — 0:30 to 0:58
 
-**Screen:** The ten city cards. Move across Hyderabad, Amritsar, Kolkata as you
-name them.
+**Screen:** You're through the guest button and on the city picker now. Move
+across Hyderabad, Amritsar, Kolkata as you name them.
 
-> Ten cities, and each one speaks its own language. Hyderabad is Telugu.
-> Amritsar is Punjabi. Kolkata is Bengali. I'm not picking a difficulty level
-> here — I'm picking where I'm going.
+> Hyderabad is Telugu. Amritsar is Punjabi. Kolkata is Bengali. I'm not picking
+> a difficulty level here — I'm picking where I'm going.
 
 **Screen:** Scroll to the second picker. Rest the cursor there for a beat before
 speaking.
@@ -94,7 +102,7 @@ else. Don't throw it away.
 
 ---
 
-## Beat 3 · Two ways in — 0:55 to 1:15
+## Beat 3 · Two ways in — 0:58 to 1:18
 
 **Screen:** The screen offering **Just walk in** and the describe box.
 
@@ -121,7 +129,7 @@ what makes beat 5 land as a payoff rather than a new topic.
 
 ---
 
-## Beat 4 · The street — 1:15 to 1:45
+## Beat 4 · The street — 1:18 to 1:48
 
 **Screen:** The world loads. Walk a few steps so it's obviously live, not
 footage.
@@ -158,7 +166,7 @@ Retrying the mic on camera looks worse than typing.
 
 ---
 
-## Beat 5 · Rehearsing the first Saturday — 1:45 to 2:35
+## Beat 5 · Rehearsing the first Saturday — 1:48 to 2:38
 
 **Screen:** Exit back to the two doors.
 
@@ -205,7 +213,7 @@ the proof.
 
 ---
 
-## Beat 6 · Not only markets — 2:35 to 2:50
+## Beat 6 · Not only markets — 2:38 to 2:53
 
 **Screen:** Switch to the tab holding the railway world.
 
@@ -221,7 +229,7 @@ last one wasn't a one-off.
 
 ---
 
-## Beat 7 · Close — 2:50 to 3:05
+## Beat 7 · Close — 2:53 to 3:08
 
 **Screen:** Back on the street, walking.
 
