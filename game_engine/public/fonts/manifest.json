@@ -1,0 +1,74 @@
+[
+  {
+    "family": "Noto Sans Telugu",
+    "file": "NotoSansTelugu.woff2",
+    "bytes": 123972,
+    "primaryRange": "U+0C00-0C7F",
+    "licence": "OFL-1.1",
+    "source": "fonts.googleapis.com css2"
+  },
+  {
+    "family": "Noto Sans Devanagari",
+    "file": "NotoSansDevanagari.woff2",
+    "bytes": 121192,
+    "primaryRange": "U+0900-097F",
+    "licence": "OFL-1.1",
+    "source": "fonts.googleapis.com css2"
+  },
+  {
+    "family": "Noto Sans Tamil",
+    "file": "NotoSansTamil.woff2",
+    "bytes": 50468,
+    "primaryRange": "U+0B82-0BFA",
+    "licence": "OFL-1.1",
+    "source": "fonts.googleapis.com css2"
+  },
+  {
+    "family": "Noto Sans Bengali",
+    "file": "NotoSansBengali.woff2",
+    "bytes": 107720,
+    "primaryRange": "U+0980-09FE",
+    "licence": "OFL-1.1",
+    "source": "fonts.googleapis.com css2"
+  },
+  {
+    "family": "Noto Sans Kannada",
+    "file": "NotoSansKannada.woff2",
+    "bytes": 90796,
+    "primaryRange": "U+0C80-0CF3",
+    "licence": "OFL-1.1",
+    "source": "fonts.googleapis.com css2"
+  },
+  {
+    "family": "Noto Sans Malayalam",
+    "file": "NotoSansMalayalam.woff2",
+    "bytes": 89468,
+    "primaryRange": "U+0D00-0D7F",
+    "licence": "OFL-1.1",
+    "source": "fonts.googleapis.com css2"
+  },
+  {
+    "family": "Noto Sans Gujarati",
+    "file": "NotoSansGujarati.woff2",
+    "bytes": 112268,
+    "primaryRange": "U+0A80-0AFF",
+    "licence": "OFL-1.1",
+    "source": "fonts.googleapis.com css2"
+  },
+  {
+    "family": "Noto Sans Gurmukhi",
+    "file": "NotoSansGurmukhi.woff2",
+    "bytes": 33824,
+    "primaryRange": "U+0A01-0A76",
+    "licence": "OFL-1.1",
+    "source": "fonts.googleapis.com css2"
+  },
+  {
+    "family": "Noto Sans Oriya",
+    "file": "NotoSansOriya.woff2",
+    "bytes": 98872,
+    "primaryRange": "U+0B01-0B77",
+    "licence": "OFL-1.1",
+    "source": "fonts.googleapis.com css2"
+  }
+]
