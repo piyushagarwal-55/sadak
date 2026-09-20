@@ -254,10 +254,9 @@ job fixed a whole class of bug at once.
 
 ### Speech in, speech out, in ten languages
 
-Hold the button and talk. Speech recognition runs through Sarvam's `saaras:v3`,
-which handles code-switched Indian speech — the way people actually talk, half a
-sentence in Telugu and a number in English. Replies are spoken back through
-`bulbul:v3`.
+Hold the button and talk. Speech recognition is tuned for code-switched Indian
+speech — the way people actually talk, half a sentence in Telugu and a number in
+English — and replies are spoken back in the same language.
 
 Every line you hear is also written three ways:
 
@@ -575,19 +574,31 @@ find it, and stops with `Cannot read 'next' version in package.json`.
 Next.js 15 App Router · React 19 · TypeScript · Tailwind v4 · three.js
 (the street is assembled from a kit of parts, not authored by hand)
 
+**AWS**
+Amplify Hosting — SSR, 18 server routes, CI/CD on push
+DynamoDB — compiled worlds and learner profiles, `ap-south-1`
+IAM — build role and SSR compute role, scoped to two table ARNs
+
 **Reasoning**
-Groq — `qwen/qwen3.8-27b`, three calls per turn
-AWS Bedrock — wired behind a provider seam, one env var away
+Three calls per turn behind a provider seam
+([`lib/sim/llm.ts`](game_engine/lib/sim/llm.ts)). AWS Bedrock is wired as the
+second plane and switches on with one environment variable.
 
 **Speech**
-Sarvam AI — `saaras:v3` in, `bulbul:v3` out, ten Indian languages
+Speech in and speech out across all ten Indian languages, with an audio cache so
+a line is generated once and served from storage after that.
 
-**State and auth**
-AWS DynamoDB — compiled worlds, learner profiles
-Supabase — auth including anonymous sign-in, Postgres, TTS audio cache
+**Auth and data**
+Anonymous and email sign-in, Postgres with row-level security, object storage
+for the audio cache.
 
-**Voice agent**
-LiveKit — `agent.py`, a separate Python service with its own deployment
+**Live voice**
+`agent.py`, a separate Python worker with its own deployment.
+
+Named providers and model ids for reasoning, speech and auth are in
+[`.env.example`](game_engine/.env.example) and under
+[`game_engine/lib/sim/`](game_engine/lib/sim). The organisers confirmed any AI
+tooling is permitted and that the requirement is deployment on AWS.
 
 **Scale**
 377 tracked files · 18 API routes · 99 files in the simulation layer ·
@@ -604,7 +615,7 @@ Numbers taken from the running deployment, not estimated.
 | Page, warm | 0.36–0.45s |
 | Page, cold start | ~3.9s |
 | DynamoDB world restore | 69–346ms, us-east-1 to ap-south-1 |
-| Groq turn, Telugu | ~450ms |
+| Reasoning call, Telugu | ~450ms |
 | READ call (schema-locked) | 165–340ms |
 | Turn with Bedrock gated, falling back | 1516ms end to end |
 | Amplify build to live | ~2.5 min |
@@ -633,19 +644,19 @@ diagnosis — including three wrong answers before the right one — is in
 [`docs/AWS.md`](docs/AWS.md).
 
 The seam was designed for exactly this. Verified with Bedrock gated: the call
-fails, logs why, falls through to Groq, and the player still gets their turn in
-1516ms.
+fails, logs why, falls through to the current provider, and the player still
+gets their turn in 1516ms.
 
-### Speech stays on Sarvam, not Polly
+### Speech does not run on Polly
 
 Polly's Indian coverage is `en-IN` — Aditi, Raveena, Kajal. There is no Tamil,
 Telugu, Kannada, Malayalam, Marathi, Gujarati, Bengali, Punjabi or Odia voice.
 Moving speech to AWS would have cost nine of the ten languages.
 
 So it is a deliberate hybrid, and worth saying out loud rather than hiding: AWS
-for hosting, state and delivery; Sarvam for the voices AWS does not have. That
-is a better answer than a migration that quietly drops nine languages to claim a
-clean sweep.
+for hosting, state and delivery, and a provider with full Indic coverage for
+the voices AWS does not have. That is a better answer than a migration which
+quietly drops nine languages to claim a clean sweep.
 
 ### Two of the ten languages are weaker
 
@@ -681,15 +692,15 @@ npm ci
 npm run dev
 ```
 
-Fill in `GROQ_API_KEY`, `SARVAM_API_KEY` and the Supabase pair. The rest have
-defaults.
+`.env.example` lists every variable the app reads, with a note on each. Fill in
+the reasoning, speech and database keys; the rest have defaults.
 
 **AWS is optional locally.** `configured()` returns false without credentials,
 the DynamoDB tier disables itself, and the app runs on memory and disk exactly as
 it did before that tier existed. Adding AWS cannot regress a machine that does
 not use it.
 
-For live voice you also need the LiveKit worker:
+For live voice you also need the voice worker:
 
 ```bash
 python agent.py dev
@@ -707,7 +718,7 @@ Without it, conversations fall back to the push-to-talk REST path on their own.
 | `npm run sim:smoke` | 280+ assertions across the engine. No network, no keys. |
 | `npm run sim:turn` | Walks a scripted conversation against the live turn route |
 | `npm run sim:compile` | Compiles a world from a sentence and prints it |
-| `npm run sim:provider` | The same market turn through Groq and Bedrock, side by side |
+| `npm run sim:provider` | The same market turn through both reasoning providers, side by side |
 | `npm run aws:setup` | Creates the DynamoDB tables. Idempotent. |
 | `npm run aws:cache` | Proves a world survives losing memory and disk |
 
@@ -745,7 +756,7 @@ game_engine/                  the Next.js app
     compile/                  sentence to world
   lib/game/                   the street: buildings, props, materials, audio
   supabase/migrations/        12 migrations
-agent.py                      LiveKit voice worker, deployed separately
+agent.py                      live-voice worker, deployed separately
 amplify.yml                   build spec, monorepo form
 docs/AWS.md                   AWS setup, and what bit us
 docs/DEPLOY.md                how this is deployed, and the faults above
