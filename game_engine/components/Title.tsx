@@ -270,7 +270,7 @@ export default function Title({
                 <Badge variant="neutral">10 Indian languages</Badge>
               </li>
               <li>
-                <Badge variant="neutral">Voice by Sarvam AI</Badge>
+                <Badge variant="neutral">Speak, don&apos;t type</Badge>
               </li>
             </ul>
           </div>
