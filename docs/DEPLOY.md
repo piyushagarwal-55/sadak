@@ -14,10 +14,30 @@ document is the actual deliverable.
 | The LiveKit voice agent (`agent.py`) | **not here** | separate Python deployment, its own Dockerfile at the repo root. Untouched. |
 | Speech in and out | **Sarvam** | Polly has `en-IN` voices only — Aditi, Raveena, Kajal — and no Tamil, Telugu, Kannada, Malayalam, Marathi, Gujarati, Bengali, Punjabi or Odia. Nine of ten languages is not a trade worth making. |
 
+## Read this before step 1
+
+**Set the environment variables while you create the app, not after.** Amplify
+starts a build the instant the app exists, and this build fails with no
+environment:
+
+```
+Error: Missing NEXT_PUBLIC_SUPABASE_URL
+Export encountered an error on /roznamcha/page, exiting the build.
+```
+
+Verified from a clean clone of this repo. `/roznamcha` and `/_not-found` are
+prerendered, and the Supabase client they pull in reads that variable at build
+time. The *values* are irrelevant to the build — placeholders compile fine, the
+names just have to exist — but they matter at runtime, so use the real ones.
+
+In the create flow the field is under **Advanced settings → Environment
+variables**. If you miss it, nothing is broken: set them afterwards and hit
+*Redeploy this version*.
+
 ## 1. Create the Amplify app
 
 Console → **Amplify** → *Create new app* → **GitHub** → authorise → pick
-`mittal-parth/sadak` and the branch you are submitting.
+`piyushagarwal-55/sadak` and the branch you are submitting.
 
 Amplify reads `amplify.yml` at the repo root and finds `appRoot: game_engine`
 by itself. If it offers to generate a build spec, decline — the one in the repo
@@ -52,7 +72,26 @@ GROQ_MODEL                    qwen/qwen3.8-27b
 SARVAM_CHAT_MODEL
 SARVAM_TTS_MODEL
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+NEXT_PUBLIC_POSTHOG_HOST
 SADAK_DDB_REGION              ap-south-1
+```
+
+The exact set the build was verified against, as a block you can paste and then
+fill in:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SECRET_KEY=
+NEXT_PUBLIC_SITE_URL=
+NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN=
+NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
+GROQ_API_KEY=
+SARVAM_API_KEY=
+LIVEKIT_URL=
+LIVEKIT_API_KEY=
+LIVEKIT_API_SECRET=
 ```
 
 **Do NOT set** `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, or anything else

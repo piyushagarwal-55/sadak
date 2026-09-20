@@ -27,6 +27,15 @@
 # Everything else (GROQ_API_KEY, SARVAM_API_KEY, the Supabase pair) goes in
 # Amplify's environment variables. `AWS_`-prefixed names are reserved there,
 # which is why the table region override is `SADAK_DDB_REGION`.
+#
+# THE ENV VARS MUST EXIST BEFORE THE FIRST BUILD, NOT AFTER IT
+#
+# Verified from a clean clone: with no environment at all, `npm run build`
+# fails at "Missing NEXT_PUBLIC_SUPABASE_URL" while prerendering /roznamcha and
+# /_not-found. Amplify starts a build the moment the app is created, so set the
+# variables in *Advanced settings* during creation or that first build dies.
+# Their VALUES do not matter to the build -- placeholders compile fine, the
+# pages only need the names to be defined -- they matter at runtime.
 version: 1
 applications:
   - appRoot: game_engine
@@ -34,6 +43,12 @@ applications:
       phases:
         preBuild:
           commands:
+            # Pin the runtime. Node 20 is what this build was verified on, from
+            # a clean clone; leaving it to the image default means Amplify can
+            # change it under us between deploys. Amplify's build images ship
+            # nvm with several versions installed.
+            - nvm use 20
+            - node -v
             # `ci` rather than `install`: the lockfile is the build, and a
             # resolver that quietly picks a newer minor on the server than the
             # one tested here is a class of bug nobody can reproduce locally.
