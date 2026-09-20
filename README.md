@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://youtu.be/hmHDtet0heY">
+  <a href="https://main.d33zh3b90nj4kw.amplifyapp.com">
     <img src="docs/assets/sadak-hero.png" alt="SADAK — an immersive 3D Indian street for spoken-language practice" width="100%" />
   </a>
 </p>
