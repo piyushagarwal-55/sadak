@@ -1,0 +1,51 @@
+# AWS Amplify Hosting build spec.
+#
+# WHY MONOREPO FORM
+#
+# The Next app is in `game_engine/`, not at the repo root — the root holds the
+# LiveKit voice agent (`agent.py`, `Dockerfile`, `requirements.txt`), which is a
+# separate Python deployment and is NOT built here. `appRoot` is what tells
+# Amplify that, and without it the build fails at `npm ci` with no package.json.
+#
+# WHY AMPLIFY AND NOT APP RUNNER OR ECS
+#
+# This is a Next 15 App Router app with twenty server routes and middleware, so
+# it needs real SSR rather than a static export. Amplify Hosting runs Next SSR
+# natively from a git push; App Runner and ECS would both want a Dockerfile and
+# a registry for the same result. The Dockerfile already in this repo is the
+# agent's and has nothing to do with the web app.
+#
+# CREDENTIALS ARE NOT SET HERE
+#
+# `AWS_ACCESS_KEY_ID` and friends are deliberately absent. Amplify's SSR compute
+# carries an IAM role, and the SDK's default credential chain finds it without
+# being told — see `configured()` in lib/sim/aws/dynamo.ts, which recognises a
+# role as readily as static keys. Attach DynamoDB permissions to that role
+# rather than pasting a secret into the console; a key in an env var is a key
+# that has to be rotated by hand later.
+#
+# Everything else (GROQ_API_KEY, SARVAM_API_KEY, the Supabase pair) goes in
+# Amplify's environment variables. `AWS_`-prefixed names are reserved there,
+# which is why the table region override is `SADAK_DDB_REGION`.
+version: 1
+applications:
+  - appRoot: game_engine
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            # `ci` rather than `install`: the lockfile is the build, and a
+            # resolver that quietly picks a newer minor on the server than the
+            # one tested here is a class of bug nobody can reproduce locally.
+            - npm ci
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: .next
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - node_modules/**/*
+          - .next/cache/**/*
