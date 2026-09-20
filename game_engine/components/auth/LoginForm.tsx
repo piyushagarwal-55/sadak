@@ -12,9 +12,24 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 const IS_DEV = process.env.NODE_ENV === "development";
 
 
+/**
+ * Where a magic link comes back to.
+ *
+ * This used to be `window.location.origin` alone, which stamps the link with
+ * whatever host you happened to ask from. Ask while a dev server is open and
+ * the email points at localhost:3000 forever — the target is baked into the
+ * link when it is sent, so it cannot be repaired afterwards, and clicking it
+ * later gives ERR_CONNECTION_REFUSED once that server is gone.
+ *
+ * `NEXT_PUBLIC_SITE_URL` is set on every deployed build and deliberately unset
+ * locally, so production links always come back to production and local ones
+ * still come back to localhost. Supabase's own Site URL setting never enters
+ * into it: it is only consulted when no redirect is supplied, and one always is.
+ */
 function authRedirectPath(next: string | null): string {
   const path = next && next.startsWith("/") && !next.startsWith("//") ? next : "/";
-  return `${window.location.origin}/auth/callback?next=${encodeURIComponent(path)}`;
+  const origin = (process.env.NEXT_PUBLIC_SITE_URL || window.location.origin).replace(/\/+$/, "");
+  return `${origin}/auth/callback?next=${encodeURIComponent(path)}`;
 }
 
 export default function LoginForm() {
