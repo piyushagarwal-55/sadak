@@ -765,6 +765,15 @@ docs/DEMO-SCRIPT.md           the demo video, beat by beat
 
 ---
 
+## Team
+
+| | |
+|---|---|
+| Piyush Agarwal | [@piyushagarwal-55](https://github.com/piyushagarwal-55) |
+| Fahad | [@fxhxdxd](https://github.com/fxhxdxd) |
+
+---
+
 <p align="center">
   <b><a href="https://main.d33zh3b90nj4kw.amplifyapp.com">Walk in →</a></b><br/>
   <sub>Opens as a guest. Go and fail at buying tomatoes.</sub>
