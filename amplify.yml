@@ -55,6 +55,25 @@ applications:
             - npm ci
         build:
           commands:
+            # HAND THE SERVER-ONLY SECRETS TO THE SSR RUNTIME.
+            #
+            # Amplify's environment variables reach the BUILD, not the Lambda
+            # that serves SSR. `NEXT_PUBLIC_*` therefore works -- Next inlines
+            # those at build time -- while anything read with `process.env` in
+            # a route handler is undefined at request time. It surfaces as the
+            # app's own error, "SARVAM_API_KEY is not set. Copy .env.example to
+            # .env and add your key.", on a deployment where the variable is
+            # plainly set in the console.
+            #
+            # Writing them to `.env.production` before the build makes Next
+            # bundle them for the server. Only `NEXT_PUBLIC_*` is ever exposed
+            # to the browser, so the keys below stay server-side.
+            #
+            # The pattern is an allow-list rather than a bare `env`: the build
+            # container's environment also holds AWS credentials and CodeBuild
+            # metadata, and none of that belongs in a bundle.
+            - env | grep -E '^(GROQ|SARVAM|SUPABASE|LIVEKIT|SADAK|SIM_LLM)_' >> .env.production || true
+            - 'echo "server-side vars written: $(grep -c = .env.production || echo 0)"'
             - npm run build
       artifacts:
         baseDirectory: .next
