@@ -51,7 +51,7 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [devEmail, setDevEmail] = useState("");
   const [devPassword, setDevPassword] = useState("");
-  const [busy, setBusy] = useState<"google" | "magic" | "password" | null>(null);
+  const [busy, setBusy] = useState<"google" | "magic" | "password" | "guest" | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -71,6 +71,41 @@ export default function LoginForm() {
       setFormError(error.message);
       setBusy(null);
     }
+  }
+
+  /**
+   * WALK IN WITHOUT AN ACCOUNT.
+   *
+   * Supabase's anonymous sign-in, not a bypass: it mints a real session with a
+   * real `auth.uid()`, so every row-level-security policy, the progress table
+   * and the leaderboard keep working exactly as they do for a signed-in player.
+   * Nothing downstream needs to know the difference, which is the whole reason
+   * to do it this way rather than punching a hole in the middleware.
+   *
+   * It exists because the first thing a judge meets should be a street, not a
+   * sign-up form. Anyone who decides to keep their progress can link an email
+   * to the same account afterwards; the uid does not change.
+   */
+  async function continueAsGuest() {
+    setFormError(null);
+    setMessage(null);
+    setBusy("guest");
+    posthog.capture("sign_in_attempted", { method: "guest" });
+    const { error } = await supabase.auth.signInAnonymously();
+    if (error) {
+      // Anonymous sign-ins are off by default on a Supabase project, and the
+      // raw message ("Anonymous sign-ins are disabled") reads like a bug in
+      // this button rather than a setting nobody has turned on yet.
+      setFormError(
+        /anonymous/i.test(error.message)
+          ? "Guest access is switched off for this project. Enable Anonymous sign-ins in Supabase under Authentication → Sign In / Providers."
+          : error.message
+      );
+      setBusy(null);
+      return;
+    }
+    router.push(safeNext);
+    router.refresh();
   }
 
   async function sendMagicLink(event: React.FormEvent) {
@@ -174,6 +209,18 @@ export default function LoginForm() {
             <GoogleMark />
             {busy === "google" ? "Redirecting…" : "Continue with Google"}
           </Button>
+
+          <Button
+            type="button"
+            className="w-full"
+            disabled={busy !== null}
+            onClick={() => void continueAsGuest()}
+          >
+            {busy === "guest" ? "Opening the street…" : "Continue as guest"}
+          </Button>
+          <p className="-mt-2 text-xs text-foreground/60">
+            No account needed. Your progress is kept on this device.
+          </p>
 
           <div className="relative text-center text-sm text-foreground/70">
             <span className="bg-background px-2 relative z-10">or</span>
