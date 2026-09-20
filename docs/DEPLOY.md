@@ -51,48 +51,35 @@ same region as the tables.
 Amplify → *Hosting* → **Environment variables**. Copy these from
 `game_engine/.env`:
 
-**Required — the build or the app fails without them**
+**Required** - the build fails, or the app is wrong, without these:
 
 ```
-GROQ_API_KEY
-SARVAM_API_KEY
-NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_URL              throws at build time
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY  throws at build time
 SUPABASE_SECRET_KEY
-NEXT_PUBLIC_SITE_URL          <- the Amplify URL, see step 4
-LIVEKIT_URL
-LIVEKIT_API_KEY
-LIVEKIT_API_SECRET
-NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN
+GROQ_API_KEY                          the reasoning plane
+SARVAM_API_KEY                        speech in and out
+NEXT_PUBLIC_SITE_URL                  see below
+LIVEKIT_URL / _API_KEY / _API_SECRET  live-voice path only
 ```
 
-**Optional — the code has defaults**
+`NEXT_PUBLIC_SITE_URL` is the quiet one. Unset, it does not fail -- it falls
+back to `https://playsadak.vercel.app`, so OG tags and auth callbacks point at
+the old domain and sign-in breaks in a way that blames Supabase. Set it to the
+Amplify URL after the first deploy and redeploy.
+
+**Optional** - the code has defaults, and blank only means analytics are
+dropped with a warning:
 
 ```
-GROQ_MODEL                    qwen/qwen3.8-27b
-SARVAM_CHAT_MODEL
-SARVAM_TTS_MODEL
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-NEXT_PUBLIC_POSTHOG_HOST
-SADAK_DDB_REGION              ap-south-1
+GROQ_MODEL                         defaults to qwen/qwen3.8-27b
+SARVAM_CHAT_MODEL, SARVAM_TTS_MODEL
+NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN, NEXT_PUBLIC_POSTHOG_HOST
+SADAK_DDB_REGION                   defaults to ap-south-1
 ```
 
-The exact set the build was verified against, as a block you can paste and then
-fill in:
-
-```
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SECRET_KEY=
-NEXT_PUBLIC_SITE_URL=
-NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN=
-NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
-GROQ_API_KEY=
-SARVAM_API_KEY=
-LIVEKIT_URL=
-LIVEKIT_API_KEY=
-LIVEKIT_API_SECRET=
-```
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` is **not** needed: it is only a legacy fallback
+for the publishable key, which you are setting.
 
 **Do NOT set** `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, or anything else
 `AWS_`-prefixed. Amplify reserves that prefix, and the next step is a better
