@@ -241,7 +241,13 @@ export default function Title({
       <header className="border-b-2 border-border bg-main text-main-foreground">
         <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-8 sm:px-6 sm:py-10 sm:flex-row sm:items-start sm:gap-7 lg:px-8">
           <Image
-            src="/icon.png"
+            // A copy in public/, not app/icon.png. That file is an App Router
+            // METADATA file: Next turns it into the favicon route, so it is
+            // served at /icon.png but is not a file under public/. next/image
+            // resolves local paths against public/ on disk, finds nothing, and
+            // returns 404 from /_next/image -- while /icon.png itself answers
+            // 200, which is why this only broke the logo and not the favicon.
+            src="/logo.png"
             alt="Sadak"
             width={112}
             height={112}
