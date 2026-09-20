@@ -1,155 +1,245 @@
 # SADAK — demo video script
 
-Target: **2 minutes 30**. Live at https://main.d33zh3b90nj4kw.amplifyapp.com
+Runs about 2 minutes 45. Live at https://main.d33zh3b90nj4kw.amplifyapp.com
 
-Two columns: what is on screen, and what you say over it. The spoken lines are
-written to be said out loud, not read — short sentences, no clauses stacked up.
-Say them in your own words if a phrase feels unnatural in your mouth.
-
----
-
-## Before you hit record
-
-These are the things that ruin a take, in the order they usually do it.
-
-1. **Play through the whole demo once.** The text-to-speech cache is cold on a
-   fresh deploy, so the very first time a line is spoken it has to be generated.
-   Playing through once fills the cache and every take after that is instant.
-2. **Test the microphone in the browser you will record in.** Chrome asks for
-   permission the first time and that dialog will land in the middle of your
-   take otherwise.
-3. **Close other tabs.** The 3D world and the recorder are both asking for the
-   GPU.
-4. **Have the railway world already compiled in a second tab.** The last beat is
-   a look, not a wait — do not generate it on camera.
-5. **Sign out first**, so the recording starts at the login screen.
+Each beat gives you the screen action, the words, and roughly how long it takes.
+The spoken lines are written to be said out loud. Read them a couple of times
+first and then say them your own way — a script you are reciting sounds like a
+script.
 
 ---
 
-## 0:00 – 0:12 · The hook
+## Before recording
 
-| Screen | Say |
-|---|---|
-| Login page. Cursor moves toward **Continue as guest**. | "India has twenty-two official languages. Most people move to a city that speaks one they do not. Apps teach you to pass a test. Nobody teaches you to buy vegetables." |
-| Click **Continue as guest**. | "No sign-up. This is SADAK." |
-
-> Leading with the guest button is deliberate — it shows a judge they can open
-> the link themselves without making an account.
-
----
-
-## 0:12 – 0:32 · Two choices that define the product
-
-| Screen | Say |
-|---|---|
-| The ten city cards. Hover across a few — Hyderabad, Amritsar, Kolkata. | "First, pick a city. Each one speaks its own language — Telugu in Hyderabad, Punjabi in Amritsar, Bengali in Kolkata. Ten cities, ten languages." |
-| Scroll to the second picker. Point at **English**. | "Then tell it what *you* already know. Everything is explained back to you in this language. So a Tamil speaker learning Hindi reads the meaning in Tamil, not in English." |
-| Pick **Hyderabad**, level, click **Enter**. | "I am going to Hyderabad. I speak English. Let us walk." |
-
-> That second picker is the part people miss. Say it clearly — it is what makes
-> this usable by someone who does not already speak English.
+1. **Play the whole demo through once.** Audio for each line is generated the
+   first time it is spoken and cached after that. One pass fills the cache and
+   every take afterwards plays instantly.
+2. **Compile the railway world in a second tab and leave it open.** The last
+   beat is a glance at it. Generating it on camera costs you twenty dead
+   seconds.
+3. **Test the microphone in the browser you will record in.** Chrome asks for
+   permission the first time, and that dialog will otherwise appear in the
+   middle of a take.
+4. **Sign out**, so the recording opens on the login screen.
+5. Close other tabs. The 3D world and the screen recorder are both competing for
+   the GPU.
+6. Record at 1080p or better. Text on the dialogue card has to be readable.
 
 ---
 
-## 0:32 – 0:48 · The two doors
+## Beat 1 — the problem · 0:00–0:15
 
-| Screen | Say |
-|---|---|
-| The screen showing **Just walk in** and the describe option. | "Now there are two ways in." |
-| Point at **Just walk in**. | "If you just want to learn the language, walk straight in. The errands are already written." |
-| Point at the describe box. Type slowly: `I want to buy vegetables at the market` | "But say tomorrow you are actually going to the market to buy vegetables. Describe it — in plain English — and SADAK builds that world for you. A real street, real people, that exact situation." |
-| Do **not** submit yet. Click **Just walk in**. | "First, the city itself." |
+**Screen:** Login page, still. Do not move the cursor while you say the first
+sentence.
 
-> This is the whole pitch in fifteen seconds. Slow down here. Everything before
-> is setup and everything after is proof.
+> Every year, millions of people in India move to a city that speaks a language
+> they don't. You can finish an entire course and still freeze at a vegetable
+> stall.
 
----
+**Screen:** Move to **Continue as guest** and click it.
 
-## 0:48 – 1:10 · Walking the street
+> SADAK is built for that moment. No account — you can open it as a guest.
 
-| Screen | Say |
-|---|---|
-| The 3D street loads. Walk a few steps. | "This is Charminar Lane. It is a real street you walk." |
-| Walk up to a character. The dialogue opens. | "Every person here speaks Telugu and only Telugu." |
-| **Hold the mic and speak.** Let the reply play out loud. | *(say nothing while it answers — let the voice carry it)* |
-| Point at the three lines under the reply. | "What she said. How to pronounce it. What it means. And here — what I could say back." |
-
-> Let the audio breathe. The temptation is to talk over your own product; do
-> not. Two seconds of a Telugu vegetable seller answering you is worth more than
-> anything you could say on top of it.
-
-**If speech fails on the take:** the card at the bottom has a keyboard toggle.
-Type the phrase instead and keep going. Do not stop to explain it.
+**Delivery:** Say the first line slower than feels natural. It is the only part
+of the video where you are asking someone to care rather than showing them
+something.
 
 ---
 
-## 1:10 – 1:55 · The part nobody else has
+## Beat 2 — two pickers · 0:15–0:42
 
-| Screen | Say |
-|---|---|
-| Exit. Back at the two doors. | "Now the other way in." |
-| Type: `I want to buy vegetables at the market`. Submit. | "I tell it what I am doing tomorrow." |
-| The world compiles. Let it run. | "It is building the world. The stalls, the seller, what she sells, what she charges — and the errands." |
-| The market loads. | "I did not pick this from a menu. I described it in a sentence." |
-| Walk to the vegetable seller. | "Here is the errand — buy a kilo of tomatoes. She wants forty rupees." |
-| **Speak. Haggle. Let it run three or four turns.** | *(quiet — let the exchange play)* |
-| Point at the wallet as it changes. | "She came down to thirty-five. And the money actually moved." |
+**Screen:** The ten city cards. Move across Hyderabad, Amritsar, Kolkata as you
+name them.
 
-> The haggle is your strongest twenty seconds. The price ladder is real — the
-> engine sets it, the model cannot invent a number. If she comes down and the
-> wallet changes, you have shown a working simulation and not a chatbot with a
-> costume on.
+> Ten cities. Each one speaks its own language — Telugu in Hyderabad, Punjabi in
+> Amritsar, Bengali in Kolkata.
 
----
+**Screen:** Scroll to the second picker. Rest the cursor on the language list.
 
-## 1:55 – 2:10 · Breadth
+> Then you say which language you already understand. Every hint, every meaning,
+> every correction comes back in that one. So someone who only speaks Tamil can
+> learn Hindi without going through English first.
 
-| Screen | Say |
-|---|---|
-| Switch to the tab with the railway world. | "Same sentence, different situation. A railway station." |
-| Show the ticket counter and the errands panel. | "Buy a ticket. Find the platform. Different place, different words, same way in." |
+**Screen:** Pick Hyderabad, pick your level, click **Enter**.
 
-> Fifteen seconds. Do not linger — this beat exists to prove the first one was
-> not a one-off.
+> I'll take Hyderabad. I read English.
+
+**Delivery:** Do not rush the second picker. It is the difference between an app
+for people who already speak English and an app for everyone else, and it takes
+one sentence to explain.
 
 ---
 
-## 2:10 – 2:30 · Close
+## Beat 3 — the two ways in · 0:42–1:00
 
-| Screen | Say |
-|---|---|
-| Back to the street, walking. | "Ten languages. Speech in and speech out. Worlds built from a sentence." |
-| Optional: a flash of the Amplify URL in the address bar. | "It runs on AWS — Amplify for the app, DynamoDB for the worlds it builds." |
-| Last line, over the street. | "Most apps teach you a language. SADAK teaches you a street." |
+**Screen:** The screen offering **Just walk in** and the describe box.
+
+> There are two ways in.
+
+**Screen:** Point at **Just walk in**.
+
+> If you want general practice, walk straight in. The errands are already
+> written for the city.
+
+**Screen:** Move to the describe box. Type slowly enough to be read:
+`I want to buy vegetables at the market`
+
+> Or — say you're actually going to the market tomorrow. You type that, in
+> English, and it builds you that street. That seller, that conversation.
+
+**Screen:** Do not submit. Click **Just walk in** instead.
+
+> The city first.
+
+**Delivery:** This is the pitch. Slow down. Everything before it is setup and
+everything after it is evidence.
 
 ---
 
-## Lines to cut if you run long
+## Beat 4 — walking and talking · 1:00–1:22
 
-In this order:
+**Screen:** The street loads. Walk a few steps so it is obvious you are moving,
+not watching a video.
 
-1. The railway beat (1:55–2:10) — breadth is the first thing to go.
-2. The level picker in the 0:12 section.
-3. The AWS line in the close — the submission form already says where it runs.
+> This is Charminar Lane. You walk it.
 
-**Never cut:** the second language picker, the describe-a-scenario box, or the
-haggle. Those three are the product.
+**Screen:** Approach a character until the dialogue opens.
+
+> Everyone here speaks Telugu. Nothing else.
+
+**Screen:** Hold the mic button, say your line in Telugu, release. Let the reply
+play out loud.
+
+> *(say nothing — let the answer play)*
+
+**Screen:** Point at the three lines under her reply, then at the card below.
+
+> What she said. How to pronounce it. What it means. And down here, what I could
+> say back.
+
+**Delivery:** Stay quiet while she answers. Three seconds of a Telugu seller
+replying to you does more than any sentence you could put on top of it.
+
+**If speech fails:** the card has a keyboard toggle. Type the phrase and carry
+on. Do not stop to explain what went wrong.
 
 ---
 
-## Claims that are safe to make
+## Beat 5 — a world from one sentence · 1:22–2:10
 
-Say these; they are all true and demonstrable on the recording:
+**Screen:** Exit back to the two doors.
 
-- ten Indian languages
-- speech in and speech out
+> Now the other way in.
+
+**Screen:** Type `I want to buy vegetables at the market` and submit.
+
+> I tell it what I'm doing tomorrow.
+
+**Screen:** The world compiles. Let it run — do not talk over the whole wait.
+
+> It's building the street now. The stalls, who's selling, what they have, what
+> they charge, and what I have to get done.
+
+**Screen:** The market loads.
+
+> I didn't pick this off a list. I wrote one sentence.
+
+**Screen:** Walk to the vegetable seller. Open the dialogue. Point at the
+errand panel.
+
+> The errand is a kilo of tomatoes. She's asking forty rupees a kilo.
+
+**Screen:** Speak. Haggle. Let it run three or four turns.
+
+> *(quiet through the exchange)*
+
+**Screen:** Point at the wallet as the number changes.
+
+> She came down to thirty-five, and the money actually left my wallet. That
+> price isn't the model inventing a number. The engine sets what she can charge
+> and what she has in stock, and the model can't go outside it.
+
+**Delivery:** This is your strongest stretch. Give it the time. A model that
+cannot invent a price is the difference between a simulation and a chatbot in a
+costume, and the wallet changing on screen is the proof.
+
+---
+
+## Beat 6 — a second situation · 2:10–2:25
+
+**Screen:** Switch to the tab with the railway world already loaded.
+
+> Different sentence, different world. A railway station.
+
+**Screen:** Show the ticket counter and the errands panel.
+
+> Buy a ticket. Find the platform. Same way in.
+
+**Delivery:** Fifteen seconds, no more. This beat exists to show the last one
+was not a one-off.
+
+---
+
+## Beat 7 — close · 2:25–2:45
+
+**Screen:** Back on the street, walking.
+
+> Ten languages, your own voice, and a world built from one line of English.
+
+**Screen:** Let the address bar be visible for a moment.
+
+> It's running on AWS — Amplify serving the app, DynamoDB holding the worlds it
+> generates.
+
+**Screen:** Keep walking as you finish.
+
+> The link is in the description. It opens as a guest.
+
+---
+
+## If you run long
+
+Cut in this order:
+
+1. Beat 6, the railway world.
+2. The level picker in beat 2.
+3. The AWS sentence in beat 7 — the submission form already says where it runs.
+
+Do not cut the second language picker, the describe box, or the haggle. Those
+three are the product.
+
+---
+
+## What you can say safely
+
+All of this is true and visible in the recording:
+
+- ten Indian cities, ten languages
+- you speak, the characters answer out loud
 - a 3D world generated from one sentence of plain English
-- the engine sets the prices — the model cannot invent one
-- deployed on AWS, Amplify plus DynamoDB
-- no sign-up needed
+- the engine sets prices and stock; the model cannot invent them
+- deployed on AWS, using Amplify and DynamoDB
+- no sign-up
 
-**Do not say** the reasoning runs on Bedrock. The integration is built and one
-environment variable away, but this account's Bedrock quotas are held at zero,
-so the recording runs on Groq. If a judge asks, that is a good answer — a
-provider seam with a tested one-way fallback — but it is not a claim to make in
-a video.
+Leave out Bedrock. The integration is written and one environment variable from
+running, but the quotas on this AWS account are set to zero, so the recording
+runs on Groq. If a judge asks what the reasoning runs on, the honest answer is
+good — a provider seam with a tested fallback, currently on Groq because Bedrock
+access has not come through. It just is not a claim to put in the video.
+
+---
+
+## Recovery
+
+**The world fails to compile.** Reload and use the authored Hyderabad bazaar
+instead. The haggle works the same way and nobody watching knows which one you
+meant to show.
+
+**Speech is not recognised.** Switch to the keyboard toggle and keep talking
+over it. Retrying the microphone three times on camera is worse than typing.
+
+**Audio doesn't play.** The cache is cold — press "hear it" once, then re-record
+the beat.
+
+**The page is slow on first load.** Serverless cold start. Load it once before
+you record so the instance is warm.
